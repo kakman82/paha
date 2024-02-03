@@ -11,6 +11,7 @@ const PORT = process.env.PORT || 8080;
 import { connectDB } from './config/dbConn.js';
 
 import authRoutes from './routes/auth.js';
+import userRoutes from './routes/users.js';
 import categoryRoutes from './routes/categories.js';
 import paymentMethodRoutes from './routes/paymentMethods.js';
 import expenseRoutes from './routes/expenses.js';
@@ -35,6 +36,7 @@ app.use(morgan('dev'));
 
 // Routes;
 app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/payment-methods', paymentMethodRoutes);
 app.use('/api/expenses', expenseRoutes);

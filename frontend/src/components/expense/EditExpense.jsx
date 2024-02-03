@@ -14,10 +14,7 @@ import {
 import ModalView from '../ModalView';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  useDeleteExpenseMutation,
-  useUpdateExpenseMutation,
-} from '../../slices/expenseApiSlice';
+import { useUpdateExpenseMutation } from '../../slices/expenseApiSlice';
 import DeleteAlert from '../DeleteAlert';
 
 import { NumericFormat } from 'react-number-format';
@@ -47,9 +44,6 @@ const EditExpense = ({ categories, paymentMethods, itemToUpdate }) => {
 
   const [updateExpenseApiCall, { isLoading: updateLoading }] =
     useUpdateExpenseMutation();
-
-  const [deleteExpenseApiCall, { isLoading: deleteLoading }] =
-    useDeleteExpenseMutation();
 
   const closeCategoryModal = () => {
     setIsCategoryModalOpen(false);
@@ -93,17 +87,6 @@ const EditExpense = ({ categories, paymentMethods, itemToUpdate }) => {
   const closeDeleteAlertModal = () => {
     setOpenDeleteAlertModal(false);
   };
-
-  // const handleDelete = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const res = await deleteExpenseApiCall(itemToUpdate._id).unwrap();
-  //     navigate(-1);
-  //     toast({ title: 'Expense has been deleted!', status: 'success' });
-  //   } catch (err) {
-  //     toast({ title: err.data.message, status: 'error' });
-  //   }
-  // };
 
   return (
     <Stack spacing={4}>
@@ -274,7 +257,6 @@ const EditExpense = ({ categories, paymentMethods, itemToUpdate }) => {
             bg: 'red.500',
           }}
           type='submit'
-          isLoading={deleteLoading}
           onClick={() => setOpenDeleteAlertModal(true)}
         >
           Delete
@@ -291,7 +273,6 @@ const EditExpense = ({ categories, paymentMethods, itemToUpdate }) => {
           Cancel
         </Button>
       </Stack>
-      {/* TODO: token hatası veriyor!!! */}
       <DeleteAlert
         isOpen={openDeleteAlertModal}
         onClose={closeDeleteAlertModal}

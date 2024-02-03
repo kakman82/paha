@@ -14,12 +14,15 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDeleteCategoryMutation } from '../slices/categoryApiSlice';
 import { useDeletePaymentMethodMutation } from '../slices/paymentMethodApiSlice';
 import { useDeleteExpenseMutation } from '../slices/expenseApiSlice';
 
 const DeleteAlert = ({ isOpen, onClose, tabIndex, itemId }) => {
   const cancelRef = useRef();
+  const toast = useToast();
+  const navigate = useNavigate();
 
   let itemType = '';
   if (tabIndex === 0) {
@@ -29,8 +32,6 @@ const DeleteAlert = ({ isOpen, onClose, tabIndex, itemId }) => {
   } else if (tabIndex === 2) {
     itemType = 'Expense';
   }
-
-  const toast = useToast();
 
   const [deleteCategoryApiCall, { isLoading: isLoadinCat }] =
     useDeleteCategoryMutation();
@@ -64,6 +65,7 @@ const DeleteAlert = ({ isOpen, onClose, tabIndex, itemId }) => {
         const res = await deleteExpenseApiCall(itemId).unwrap();
         onClose();
         toast({ title: 'Expense has been deleted!', status: 'success' });
+        navigate(-1);
       } catch (err) {
         toast({ title: err.data.message, status: 'error' });
       }

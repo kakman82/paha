@@ -10,7 +10,7 @@ import ForgotPassword from './pages/auth/ForgotPassword';
 import Layout from './components/layout/Layout';
 import NotFound from './pages/NotFound';
 import Profile from './pages/Profile';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import ResetPassword from './pages/auth/ResetPassword';
 import AddTransaction from './pages/AddTransaction';
 import Definitions from './pages/Definitions';
@@ -18,6 +18,7 @@ import Expenses from './pages/Expenses';
 import EditTransaction from './pages/EditTransaction';
 import { useToast } from '@chakra-ui/react';
 import { useEffect } from 'react';
+import { jwtDecode } from 'jwt-decode';
 
 function App() {
   const { userInfo } = useSelector((state) => state.auth);
@@ -25,10 +26,12 @@ function App() {
   const navigate = useNavigate();
   const toast = useToast();
 
-  const checkCookie = document.cookie;
+  const token = document.cookie;
+
+  const cookieInfo = jwtDecode(token);
 
   useEffect(() => {
-    if (checkCookie.length === 0) {
+    if (token.length === 0 || cookieInfo.exp < new Date().getTime / 1000) {
       toast({ title: 'Please login again!', status: 'warning' });
       navigate('/auth/login');
     }

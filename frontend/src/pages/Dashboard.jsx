@@ -19,8 +19,6 @@ import { useGetLatestExpensesQuery } from '../slices/expenseApiSlice';
 import Expense from '../components/expense/Expense';
 
 const Dashboard = () => {
-  //TODO: eğer cookie yok ise ya da süresi geçti ise browserda direct logout yapan bir func yazılmalı useEffect içine..
-
   const { data: latest, isFetching } = useGetLatestExpensesQuery();
 
   return (

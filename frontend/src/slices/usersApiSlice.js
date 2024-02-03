@@ -63,6 +63,13 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    updateUserProfile: builder.mutation({
+      query: (userInfo) => ({
+        url: `/users/update-profile/${userInfo.id}`,
+        method: 'PUT',
+        body: userInfo,
+      }),
+    }),
   }),
 });
 
@@ -75,4 +82,5 @@ export const {
   useForgotPasswordMutation,
   useVerifyResetPasswordTokenMutation,
   useResetPasswordMutation,
+  useUpdateUserProfileMutation,
 } = usersApiSlice;

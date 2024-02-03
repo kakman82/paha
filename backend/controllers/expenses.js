@@ -20,10 +20,10 @@ export const createExpense = async (req, res, next) => {
   }
 };
 
-//! @route:  GET api/expenses
-//! @dec:    Get all expenses of transactions
+//! @route:  GET api/expenses/by-dates
+//! @dec:    Get expenses by given dates
 //! @access: Private
-export const getAllExpenses = async (req, res, next) => {
+export const getAllExpensesByDates = async (req, res, next) => {
   const { page, limit, search, startDate, endDate } = req.query;
 
   const pageStartingIndex =
@@ -50,7 +50,7 @@ export const getAllExpenses = async (req, res, next) => {
         select: 'name color',
       })
       .populate({ path: 'paymentMethod', select: 'name' })
-      .sort('-_id')
+      .sort('-date')
       .limit(limit)
       .skip(pageStartingIndex)
       .exec();
@@ -97,6 +97,37 @@ export const getLatestExpense = async (req, res, next) => {
   }
 };
 
+//! @route:  GET api/expenses
+//! @dec:    Get all expenses
+//! @access: Private
+export const getAllExpenses = async (req, res, next) => {
+  const { year } = req.body;
+  try {
+    const allExpenses = await Expense.find({ user: req.user._id })
+      .populate({
+        path: 'category',
+        select: 'name color',
+      })
+      .populate({ path: 'paymentMethod', select: 'name' })
+      .sort('-date');
+
+    if (!allExpenses)
+      return next(createError(404, 'No expenses found, create a new one!'));
+
+    const years = [
+      ...new Set(allExpenses.map((el) => new Date(el.date).getFullYear())),
+    ];
+
+    res.status(200).json({
+      result: allExpenses.length,
+      years,
+      allExpenses,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 //! @route:  GET api/expenses/:id
 //! @dec:    Get single expense
 //! @access: Private
@@ -120,12 +151,43 @@ export const getSingleExpense = async (req, res, next) => {
   }
 };
 
+//! @route:  GET api/expenses/total-by-categories/:year
+//! @dec:    Get yearly expense amounts by categories
+//! @access: Private
+export const getYearlyExpensesByCategories = async (req, res, next) => {
+  const { year } = req.params;
+
+  try {
+    // https://stackoverflow.com/questions/54335315/mongodb-find-filter-by-month-and-year
+    const expensesByGivenYear = await Expense.find({
+      user: req.user._id,
+      $expr: {
+        $and: [
+          { $eq: [{ $year: '$date' }, year] },
+          // { $eq: [{ $month: '$date' }, 12] },
+        ],
+      },
+    })
+      .populate({
+        path: 'category',
+        select: 'name color',
+      })
+      .populate({ path: 'paymentMethod', select: 'name' });
+
+    if (!expensesByGivenYear)
+      return next(createError(404, 'No expenses found, create a new one!'));
+
+    res.status(200).json({ expensesByGivenYear });
+  } catch (err) {
+    next(err);
+  }
+};
+export const getMonthlyExpensesByCategories = () => {};
+
 //! @route:  PUT api/expenses/:id
 //! @dec:    Update a expense transaction
 //! @access: Private
 export const updateExpense = async (req, res, next) => {
-  console.log(req.params.id);
-  console.log(req.body);
   try {
     const foundExpense = await Expense.findById(req.params.id);
     if (!foundExpense) return next(createError(404, 'Expense not found!'));
@@ -167,7 +229,7 @@ export const deleteExpense = async (req, res, next) => {
     const foundExpense = await Expense.findById(req.params.id);
     if (!foundExpense) return next(createError(404, 'Expense not found!'));
 
-    if (req.user._id === foundExpense.user.toString()) {
+    if (req.user._id.toString() === foundExpense.user.toString()) {
       await Expense.findByIdAndDelete(req.params.id);
       res.status(200).json({ message: 'Expense has been deleted!' });
     } else {

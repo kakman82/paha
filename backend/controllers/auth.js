@@ -11,7 +11,6 @@ import { verifyEmailTemplate } from '../views/verifyEmailTemplate.js';
 import { welcomeEmailTemplate } from '../views/welcomeEmailTemplate.js';
 import { passwordResetTemplate } from '../views/passwordResetTemplate.js';
 import { passwordChangedTemplate } from '../views/passwordChangedTemplate.js';
-
 import dotenv from 'dotenv';
 dotenv.config();
 

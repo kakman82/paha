@@ -6,13 +6,25 @@ export const expenseApiSlice = apiSlice
     endpoints: (builder) => ({
       getExpenses: builder.query({
         query: (q) => ({
-          url: `/expenses?page=${q.page}&limit=${q.limit}&search=${q.searchKeyword}&startDate=${q.startDate}&endDate=${q.endDate}`,
+          url: `/expenses/by-dates?page=${q.page}&limit=${q.limit}&search=${q.searchKeyword}&startDate=${q.startDate}&endDate=${q.endDate}`,
         }),
         providesTags: ['Expenses'],
       }),
       getLatestExpenses: builder.query({
         query: () => ({
           url: '/expenses/latest',
+        }),
+        providesTags: ['Expenses'],
+      }),
+      getAllExpenses: builder.query({
+        query: () => ({
+          url: '/expenses',
+        }),
+        providesTags: ['Expenses'],
+      }),
+      getExpensesByYear: builder.query({
+        query: (year) => ({
+          url: `/expenses/total-by-categories/${year}`,
         }),
         providesTags: ['Expenses'],
       }),
@@ -42,7 +54,6 @@ export const expenseApiSlice = apiSlice
         query: (id) => ({
           url: `/expenses/${id}`,
           method: 'DELETE',
-          body: id,
         }),
         invalidatesTags: ['Expenses'],
       }),
@@ -52,6 +63,8 @@ export const expenseApiSlice = apiSlice
 export const {
   useGetExpensesQuery,
   useGetLatestExpensesQuery,
+  useGetAllExpensesQuery,
+  useGetExpensesByYearQuery,
   useGetOneExpenseQuery,
   useCreateExpenseMutation,
   useUpdateExpenseMutation,

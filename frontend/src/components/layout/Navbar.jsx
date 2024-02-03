@@ -114,9 +114,9 @@ const Navbar = () => {
               </MenuButton>
               <MenuList>
                 <MenuItem>
-                  <ReachLink to={'/profile'}>Profile</ReachLink>
+                  <ReachLink to={'/user/profile'}>Profile</ReachLink>
                 </MenuItem>
-                <MenuItem>Link 2</MenuItem>
+
                 <MenuDivider />
                 <MenuItem
                   as={'button'}

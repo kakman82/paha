@@ -10,7 +10,6 @@ import {
   resetPasswordTokenStatus,
 } from '../controllers/auth.js';
 import { isResetPwdTokenVerified } from '../utils/verifyResetPwdToken.js';
-import { verifyToken } from '../utils/verifyToken.js';
 
 const route = express.Router();
 
