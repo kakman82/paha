@@ -83,8 +83,6 @@ export default function ResetPassword() {
     try {
       const res = await resetPasswordApiCall({ password, token, id }).unwrap();
 
-      console.log('reset res: ', res);
-
       if (res.success) {
         toast({ title: res.message, status: 'success' });
         navigate('/auth/login', { replace: true });

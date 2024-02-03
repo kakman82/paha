@@ -87,8 +87,6 @@ export default function Profile() {
     try {
       const res = await updateProfileApiCall(apiData).unwrap();
 
-      console.log(res);
-
       dispatch(setCredentials(res.updatedProfile));
 
       toast({ title: res.message, status: 'success' });
