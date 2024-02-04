@@ -7,8 +7,6 @@ const baseQuery = fetchBaseQuery({
     'http://localhost:8080/api',
   headers: {
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin' : 'https://paha-api-kakman82.vercel.app/api' ||
-    'https://paha-api.vercel.app/api' ||
   },
   credentials: 'include',
 });
