@@ -90,6 +90,7 @@ export default function Profile() {
       dispatch(setCredentials(res.updatedProfile));
 
       toast({ title: res.message, status: 'success' });
+      navigate('/');
     } catch (err) {
       console.log(err);
       toast({ title: err.data.message || err, status: 'error' });
