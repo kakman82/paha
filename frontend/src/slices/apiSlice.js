@@ -8,7 +8,7 @@ const baseQuery = fetchBaseQuery({
   headers: {
     'Content-Type': 'application/json',
   },
-  credentials: 'include',
+  //credentials: 'include',
 });
 
 export const apiSlice = createApi({
