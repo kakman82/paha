@@ -29,7 +29,11 @@ function App() {
 
   const token = document.cookie;
 
-  const cookieInfo = jwtDecode(token);
+  let cookieInfo;
+  if (token) {
+    cookieInfo = jwtDecode(token);
+    return cookieInfo;
+  }
 
   useEffect(() => {
     if (token.length === 0 || cookieInfo.exp < new Date().getTime / 1000) {
