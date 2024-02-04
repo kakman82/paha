@@ -24,7 +24,7 @@ connectDB();
 // Middlewares;
 app.use(
   cors({
-    origin: origin,
+    origin: '*',
     preflightContinue: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
