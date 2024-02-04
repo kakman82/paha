@@ -62,6 +62,10 @@ app.use((err, req, res, next) => {
 //   next(error);
 // });
 
+app.get('/', (req, res) => {
+  res.json('Hello from Xpenss MERN App Api...');
+});
+
 mongoose.connection.once('open', () => {
   console.log('DB connection is succesfull...');
 
