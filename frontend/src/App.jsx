@@ -39,8 +39,11 @@ function App() {
     if (token.length === 0) {
       navigate('/auth/register');
     }
-    if ((token.length > 0) & (cookieInfo.exp < new Date().getTime / 1000)) {
-      toast({ title: 'Please login again!', status: 'warning' });
+    if ((token.length > 0) & (cookieInfo?.exp < new Date().getTime / 1000)) {
+      toast({
+        title: 'Your token is expired. Please login again!',
+        status: 'warning',
+      });
       navigate('/auth/login');
     }
   }, []);
