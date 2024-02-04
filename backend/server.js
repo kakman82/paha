@@ -22,15 +22,7 @@ const app = express();
 connectDB();
 
 // Middlewares;
-app.use(
-  cors()
-  //   {
-  //   origin: '*',
-  //   preflightContinue: true,
-  //   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  //   credentials: true,
-  // }
-);
+app.use(cors());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
