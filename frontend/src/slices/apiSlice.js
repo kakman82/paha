@@ -2,10 +2,9 @@ import { fetchBaseQuery, createApi } from '@reduxjs/toolkit/query/react';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: 'https://paha-api.vercel.app/api' || 'http://localhost:8080/api',
-  headers: {
-    'Content-Type': 'application/json',
+  prepareHeaders: (headers) => {
+    return headers;
   },
-  // credentials: 'include',
 });
 
 export const apiSlice = createApi({
