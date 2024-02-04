@@ -24,8 +24,7 @@ connectDB();
 // Middlewares;
 app.use(
   cors({
-    // origin: process.env.CLIENT_URL || 'http://localhost:3000',
-    origin: true,
+    origin: process.env.CLIENT_URL || 'http://localhost:3000',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'application/json'],
     credentials: true,
