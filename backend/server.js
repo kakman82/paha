@@ -23,12 +23,13 @@ connectDB();
 
 // Middlewares;
 app.use(
-  cors({
-    origin: '*',
-    preflightContinue: true,
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true,
-  })
+  cors()
+  //   {
+  //   origin: '*',
+  //   preflightContinue: true,
+  //   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  //   credentials: true,
+  // }
 );
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
