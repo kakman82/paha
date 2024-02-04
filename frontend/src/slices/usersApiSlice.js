@@ -7,7 +7,6 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     login: builder.mutation({
       query: (data) => ({
         url: `${USERS_URL}/sign-in`,
-        credentials: 'include',
         method: 'POST',
         body: data,
       }),
@@ -21,7 +20,6 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     register: builder.mutation({
       query: (userData) => ({
         url: `${USERS_URL}/sign-up`,
-        credentials: 'include',
         method: 'POST',
         body: userData,
       }),
@@ -29,7 +27,6 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     verifyEmail: builder.mutation({
       query: (data) => ({
         url: `${USERS_URL}/verify-email`,
-        credentials: 'include',
         method: 'POST',
         body: data,
       }),
@@ -37,7 +34,6 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     resendEmailVerificationToken: builder.mutation({
       query: (userId) => ({
         url: `${USERS_URL}/resend-email-verification-token`,
-        credentials: 'include',
         method: 'POST',
         body: userId,
       }),
