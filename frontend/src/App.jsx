@@ -36,7 +36,10 @@ function App() {
   }
 
   useEffect(() => {
-    if (token.length === 0 || cookieInfo.exp < new Date().getTime / 1000) {
+    if (token.length === 0) {
+      navigate('/auth/register');
+    }
+    if ((token.length > 0) & (cookieInfo.exp < new Date().getTime / 1000)) {
       toast({ title: 'Please login again!', status: 'warning' });
       navigate('/auth/login');
     }
