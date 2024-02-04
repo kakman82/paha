@@ -5,6 +5,7 @@ const baseQuery = fetchBaseQuery({
   prepareHeaders: (headers) => {
     return headers;
   },
+  credentials: 'same-origin',
 });
 
 export const apiSlice = createApi({
