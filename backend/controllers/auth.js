@@ -312,7 +312,9 @@ export const forgotPassword = async (req, res, next) => {
     });
 
     // Generate reset URL with token and user ID;
-    const resetURL = `${process.env.CLIENT_URL}/reset-password?token=${newToken}&id=${foundUser._id}`;
+    const resetURL = `${
+      process.env.CLIENT_URL || 'http://localhost:3000'
+    }/reset-password?token=${newToken}&id=${foundUser._id}`;
 
     if (process.env.NODE_ENV === 'dev') {
       // Send password reset link to user email
