@@ -18,8 +18,8 @@ import Expenses from './pages/Expenses';
 import EditTransaction from './pages/EditTransaction';
 import { useToast } from '@chakra-ui/react';
 import { useEffect } from 'react';
-import 'core-js/stable/atob';
 import { jwtDecode } from 'jwt-decode';
+import 'core-js/stable/atob';
 
 function App() {
   const { userInfo } = useSelector((state) => state.auth);
