@@ -4,13 +4,16 @@ import react from '@vitejs/plugin-react';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  server: {
-    port: 3000,
-    proxy: {
-      '/api': {
-        target: 'https://paha.onrender.com' || 'http://localhost:5000',
-        changeOrigin: true,
-      },
-    },
-  },
+  // server: {
+  //   port: 3000,
+  //   proxy: {
+  //     '/api': {
+  //       target:
+  //         'https://paha-kakman82.vercel.app' ||
+  //         'https://paha-api.vercel.app' ||
+  //         'http://localhost:5000',
+  //       changeOrigin: true,
+  //     },
+  //   },
+  // },
 });
