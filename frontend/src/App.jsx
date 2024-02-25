@@ -37,7 +37,7 @@ function App() {
 
   useEffect(() => {
     if (token.length === 0) {
-      navigate('/auth/register');
+      navigate('/auth/login');
     }
     if ((token.length > 0) & (cookieInfo?.exp < new Date().getTime / 1000)) {
       toast({
