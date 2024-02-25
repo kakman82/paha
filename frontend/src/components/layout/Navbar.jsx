@@ -22,7 +22,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLogoutMutation } from '../../slices/usersApiSlice';
 import { clearCredentials } from '../../slices/authSlice';
 
-const navLinks = ['Dashboard', 'Expenses', 'Stats', 'Places', 'Definitions'];
+const navLinks = ['Dashboard', 'Expenses', 'Definitions'];
 
 const Navbar = () => {
   const { colorMode, toggleColorMode } = useColorMode();

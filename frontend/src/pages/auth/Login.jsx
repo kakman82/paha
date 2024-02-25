@@ -106,6 +106,7 @@ export default function Login() {
             <FormControl isRequired={true}>
               <FormLabel>Email address</FormLabel>
               <Input
+                placeholder='test.user@test.com'
                 borderColor='teal.400'
                 focusBorderColor='teal.400'
                 type='email'
@@ -117,6 +118,7 @@ export default function Login() {
               <FormLabel>Password</FormLabel>
               <InputGroup>
                 <Input
+                  placeholder='123456'
                   borderColor='teal.400'
                   focusBorderColor='teal.400'
                   type={showPassword ? 'text' : 'password'}
