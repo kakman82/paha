@@ -13,7 +13,10 @@ export const verifyToken = async (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    req.user = await User.findById(decoded.userId).select('-password');
+    // for set request user after decoded requested cookie that comes with header
+    req.user = await User.findById(decoded.userId.toString()).select(
+      '-password'
+    );
 
     next();
   } catch (err) {

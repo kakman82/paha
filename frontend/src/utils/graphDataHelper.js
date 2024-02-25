@@ -15,7 +15,6 @@ export const getTotalByCategories = (data) => {
       };
     })
     .value();
-
   return result;
 };
 

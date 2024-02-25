@@ -23,27 +23,35 @@ connectDB();
 
 // Middlewares;
 // 👇️ specify origins to allow
-const whitelist = [
-  'http://localhost:3000',
-  'https://paha-kakman82.vercel.app',
-  'https://paha-five.vercel.app',
-];
+// const whitelist = [
+//   'http://localhost:3000',
+//   'https://paha-kakman82.vercel.app',
+//   'https://paha-five.vercel.app',
+// ];
 
-// ✅ Enable pre-flight requests
-app.options('*', cors());
+// // ✅ Enable pre-flight requests
+// //app.options('*', cors());
 
-const corsOptions = {
-  credentials: true,
-  origin: (origin, callback) => {
-    if (whitelist.indexOf(origin) !== -1 || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-};
+// const corsOptions = {
+//   credentials: true,
+//   origin: (origin, callback) => {
+//     if (whitelist.indexOf(origin) !== -1 || !origin) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('Not allowed by CORS'));
+//     }
+//   },
+// };
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
+app.use(
+  cors({
+    credentials: true,
+    origin: 'http://localhost:5173',
+    optionsSuccessStatus: 200,
+    exposedHeaders: ['set-cookie'],
+  })
+);
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

@@ -101,7 +101,6 @@ export const getLatestExpense = async (req, res, next) => {
 //! @dec:    Get all expenses
 //! @access: Private
 export const getAllExpenses = async (req, res, next) => {
-  const { year } = req.body;
   try {
     const allExpenses = await Expense.find({ user: req.user._id })
       .populate({
@@ -182,6 +181,7 @@ export const getYearlyExpensesByCategories = async (req, res, next) => {
     next(err);
   }
 };
+// To be developed in the future if needed!
 export const getMonthlyExpensesByCategories = () => {};
 
 //! @route:  PUT api/expenses/:id

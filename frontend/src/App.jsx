@@ -31,7 +31,7 @@ function App() {
 
   let cookieInfo;
   if (token) {
-    cookieInfo = jwtDecode(token);
+    cookieInfo = JSON.stringify(jwtDecode(token));
     return cookieInfo;
   }
 

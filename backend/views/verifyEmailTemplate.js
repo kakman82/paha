@@ -26,6 +26,7 @@ export const verifyEmailTemplate = (code, name) => {
               display: flex;
               flex-direction: column;
               text-align: center;
+              flex-wrap: wrap;
              
           }
           b {

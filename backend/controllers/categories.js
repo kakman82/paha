@@ -46,6 +46,7 @@ export const createCategory = async (req, res, next) => {
 // @dec:    Get all categories
 // @access: Private
 export const getAllCategories = async (req, res, next) => {
+  console.log(req.user);
   try {
     const categories = await Category.find({ user: req.user._id })
       .sort('name')

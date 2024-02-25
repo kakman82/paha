@@ -9,12 +9,10 @@ import {
   Spinner,
   Stack,
   Text,
-  VStack,
 } from '@chakra-ui/react';
 import { Link as ReachLink } from 'react-router-dom';
 import { AddIcon } from '@chakra-ui/icons';
 import Graph from '../components/graph/Graph';
-import LatestTransaction from '../components/expense/LatestTransaction';
 import { useGetLatestExpensesQuery } from '../slices/expenseApiSlice';
 import Expense from '../components/expense/Expense';
 
@@ -26,9 +24,11 @@ const Dashboard = () => {
       <Container maxW={{ base: 'full', md: '6xl' }} p={{ base: 3, md: 10 }}>
         <SimpleGrid columns={{ base: 1, md: 2 }} spacing={8}>
           {/* 1.part chart */}
-          <Stack spacing={4}>
-            <Graph />
-          </Stack>
+          {(latest !== undefined || latest?.latest.length > 0) && (
+            <Stack spacing={4}>
+              <Graph />
+            </Stack>
+          )}
           {/* 2.part Latest Transactions */}
           <Flex direction={'column'}>
             <Button
@@ -67,7 +67,7 @@ const Dashboard = () => {
                   <Spinner size={'xl'} color='cyan.300' />
                 </Stack>
               )}
-              {!latest && (
+              {latest?.latest.length === 0 && (
                 <Alert status='warning'>
                   <AlertIcon />
                   Seems you do not have any expenses... <br />

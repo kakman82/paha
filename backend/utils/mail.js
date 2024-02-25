@@ -17,7 +17,7 @@ export const generateOTP = () => {
 };
 
 // Defining mail transport by using nodemailer for MAILTRAP
-export const mailTransport = () => {
+export const mailTransportForMailTrap = () => {
   const transport = nodemailer.createTransport({
     host: process.env.EMAIL_SERVICE,
     port: 2525,
@@ -25,6 +25,28 @@ export const mailTransport = () => {
       user: process.env.MAILTRAP_USERNAME,
       pass: process.env.MAILTRAP_PASSWORD,
     },
+  });
+  return transport;
+};
+// For Gmail..
+export const mailTransport = (mailOptions) => {
+  const transport = nodemailer.createTransport({
+    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 587,
+    auth: {
+      user: process.env.GMAIL_APP_USER,
+      pass: process.env.GMAIL_APP_PASSWORD,
+    },
+    // options: {
+    //   from: {
+    //     name: 'Kofi Soft',
+    //     address: process.env.GMAIL_APP_USER,
+    //   },
+    //   to: mailOptions.to,
+    //   subject: 'Gmail Deneme',
+    //   html: '<b>Hello World!</b>',
+    // },
   });
   return transport;
 };
@@ -48,7 +70,7 @@ export const sendEmail = async (options) => {
         url: options.url,
       },
     });
-    console.log('Email was sent');
+    console.log('Email was sent by using SendGrip');
   } catch (error) {
     console.log('Email not sent... An error occured!');
     console.log(error);

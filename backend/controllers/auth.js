@@ -57,30 +57,39 @@ export const signup = async (req, res, next) => {
     const OTP = generateOTP();
     const hashedOTP = await bcrypt.hash(OTP, 10);
 
-    const newVerificationToken = await VerificationToken.create({
+    // Create new Verification Token and save into the DB
+    await VerificationToken.create({
       user: newUser._id,
       token: hashedOTP,
     });
 
     // Send verification code (OTP) to the user by email
-    if (process.env.NODE_ENV === 'dev') {
-      // By Mailtrap for testing
-      mailTransport().sendMail({
-        from: process.env.TEAM_EMAIL_ADDRESS,
-        to: newUser.email,
-        subject: `Verification code: ${OTP} - Valid for only 1 hour!`,
-        html: verifyEmailTemplate(OTP, newUser.firstName),
-      });
-    } else if (process.env.NODE_ENV === 'prod') {
-      // By sendgrid in production
-      await sendEmail({
-        to: newUser.email,
-        subject: `Verification code: ${OTP} - Valid for only 1 hour!`,
-        templateId: 'd-b8723a62c1734111a64da816de28a4c3',
-        OTP: OTP,
-        firstName: newUser.firstName,
-      });
-    }
+    await mailTransport().sendMail({
+      from: process.env.GMAIL_APP_USER,
+      to: newUser.email,
+      subject: `Verification code: ${OTP} - Valid for only 1 hour!`,
+      html: verifyEmailTemplate(OTP, newUser.firstName),
+    });
+
+    // // Send verification code (OTP) to the user by email
+    // if (process.env.NODE_ENV === 'dev') {
+    //   // By Mailtrap for testing
+    //   mailTransport().sendMail({
+    //     from: process.env.GMAIL_APP_USER,
+    //     to: newUser.email,
+    //     subject: `Verification code: ${OTP} - Valid for only 1 hour!`,
+    //     html: verifyEmailTemplate(OTP, newUser.firstName),
+    //   });
+    // } else if (process.env.NODE_ENV === 'prod') {
+    //   // By sendgrid in production
+    //   await sendEmail({
+    //     to: newUser.email,
+    //     subject: `Verification code: ${OTP} - Valid for only 1 hour!`,
+    //     templateId: 'd-b8723a62c1734111a64da816de28a4c3',
+    //     OTP: OTP,
+    //     firstName: newUser.firstName,
+    //   });
+    // }
 
     // Create JWT token and Parse token as a cookie on the response;
     generateToken(res, newUser._id);
@@ -191,23 +200,30 @@ export const verifyEmail = async (req, res, next) => {
     foundUser.save();
 
     // Send welcome email to the user after email verification is succeed
-    if (process.env.NODE_ENV === 'dev') {
-      // By mailtrap for testing ;
-      mailTransport().sendMail({
-        from: process.env.TEAM_EMAIL_ADDRESS,
-        to: foundUser.email,
-        subject: 'Email Verification is succeed',
-        html: welcomeEmailTemplate(foundUser.firstName),
-      });
-    } else if (process.env.NODE_ENV === 'prod') {
-      // By sendgrid in production
-      await sendEmail({
-        to: foundUser.email,
-        subject: 'Email Verification is succeed',
-        templateId: 'd-d6241ec2c61646a9b59ce170aee809a6',
-        firstName: foundUser.firstName,
-      });
-    }
+    await mailTransport().sendMail({
+      from: process.env.TEAM_EMAIL_ADDRESS,
+      to: foundUser.email,
+      subject: 'Email Verification is succeed',
+      html: welcomeEmailTemplate(foundUser.firstName),
+    });
+
+    // if (process.env.NODE_ENV === 'dev') {
+    //   // By mailtrap for testing ;
+    //   mailTransport().sendMail({
+    //     from: process.env.TEAM_EMAIL_ADDRESS,
+    //     to: foundUser.email,
+    //     subject: 'Email Verification is succeed',
+    //     html: welcomeEmailTemplate(foundUser.firstName),
+    //   });
+    // } else if (process.env.NODE_ENV === 'prod') {
+    //   // By sendgrid in production
+    //   await sendEmail({
+    //     to: foundUser.email,
+    //     subject: 'Email Verification is succeed',
+    //     templateId: 'd-d6241ec2c61646a9b59ce170aee809a6',
+    //     firstName: foundUser.firstName,
+    //   });
+    // }
 
     res.status(200).json({
       message: 'Your email account has been verified successfully',
@@ -253,24 +269,32 @@ export const resendEmailVerificationToken = async (req, res, next) => {
       token: hashedNewOTP,
     });
 
-    if (process.env.NODE_ENV === 'dev') {
-      // Send verification email to user with new OPT;
-      mailTransport().sendMail({
-        from: process.env.TEAM_EMAIL_ADDRESS,
-        to: foundUser.email,
-        subject: `Verification code: ${newOTP} - Valid for only 1 hour!`,
-        html: verifyEmailTemplate(newOTP, foundUser.firstName),
-      });
-    } else if (process.env.NODE_ENV === 'prod') {
-      // Send email with sendgrid in production
-      await sendEmail({
-        to: foundUser.email,
-        subject: `Verification code: ${newOTP} - Valid for only 1 hour!`,
-        templateId: 'd-b8723a62c1734111a64da816de28a4c3',
-        OTP: newOTP,
-        firstName: foundUser.firstName,
-      });
-    }
+    // Send verification email to user with new OPT;
+    await mailTransport().sendMail({
+      from: process.env.GMAIL_APP_USER,
+      to: foundUser.email,
+      subject: `Verification code: ${newOTP} - Valid for only 1 hour!`,
+      html: verifyEmailTemplate(newOTP, foundUser.firstName),
+    });
+
+    // if (process.env.NODE_ENV === 'dev') {
+    //   // Send verification email to user with new OPT;
+    //   mailTransport().sendMail({
+    //     from: process.env.TEAM_EMAIL_ADDRESS,
+    //     to: foundUser.email,
+    //     subject: `Verification code: ${newOTP} - Valid for only 1 hour!`,
+    //     html: verifyEmailTemplate(newOTP, foundUser.firstName),
+    //   });
+    // } else if (process.env.NODE_ENV === 'prod') {
+    //   // Send email with sendgrid in production
+    //   await sendEmail({
+    //     to: foundUser.email,
+    //     subject: `Verification code: ${newOTP} - Valid for only 1 hour!`,
+    //     templateId: 'd-b8723a62c1734111a64da816de28a4c3',
+    //     OTP: newOTP,
+    //     firstName: foundUser.firstName,
+    //   });
+    // }
     return res.status(200).json({
       message:
         'A new verification code has been sent to your registered email account. This code will be valid for only 1 hour!',
@@ -316,24 +340,32 @@ export const forgotPassword = async (req, res, next) => {
       process.env.CLIENT_URL || 'http://localhost:3000'
     }/reset-password?token=${newToken}&id=${foundUser._id}`;
 
-    if (process.env.NODE_ENV === 'dev') {
-      // Send password reset link to user email
-      mailTransport().sendMail({
-        from: process.env.TEAM_EMAIL_ADDRESS,
-        to: foundUser.email,
-        subject: 'Password Reset',
-        html: passwordResetTemplate(foundUser.firstName, resetURL),
-      });
-    } else if (process.env.NODE_ENV === 'prod') {
-      // Send password reset link to user email by SendGrid in production
-      await sendEmail({
-        to: foundUser.email,
-        subject: 'Password Reset',
-        templateId: 'd-86ef7da189ea4285a2cc2406e7d754fb',
-        firstName: foundUser.firstName,
-        url: resetURL,
-      });
-    }
+    // Send password reset link to user email
+    await mailTransport().sendMail({
+      from: process.env.TEAM_EMAIL_ADDRESS,
+      to: foundUser.email,
+      subject: 'Password Reset',
+      html: passwordResetTemplate(foundUser.firstName, resetURL),
+    });
+
+    // if (process.env.NODE_ENV === 'dev') {
+    //   // Send password reset link to user email
+    //   mailTransport().sendMail({
+    //     from: process.env.TEAM_EMAIL_ADDRESS,
+    //     to: foundUser.email,
+    //     subject: 'Password Reset',
+    //     html: passwordResetTemplate(foundUser.firstName, resetURL),
+    //   });
+    // } else if (process.env.NODE_ENV === 'prod') {
+    //   // Send password reset link to user email by SendGrid in production
+    //   await sendEmail({
+    //     to: foundUser.email,
+    //     subject: 'Password Reset',
+    //     templateId: 'd-86ef7da189ea4285a2cc2406e7d754fb',
+    //     firstName: foundUser.firstName,
+    //     url: resetURL,
+    //   });
+    // }
 
     // send success response
     res.status(200).json({
@@ -386,23 +418,29 @@ export const resetPassword = async (req, res, next) => {
     await ResetToken.findOneAndDelete({ user: foundUser._id });
 
     // Send to user confirmation email;
-    if (process.env.NODE_ENV === 'dev') {
-      // By mailtrap for testing
-      mailTransport().sendMail({
-        from: process.env.TEAM_EMAIL_ADDRESS,
-        to: foundUser.email,
-        subject: 'Password Reset Successfully',
-        html: passwordChangedTemplate(foundUser.firstName),
-      });
-    } else if (process.env.NODE_ENV === 'prod') {
-      // By SendGrid in production
-      await sendEmail({
-        to: foundUser.email,
-        subject: 'Password Reset Successfully',
-        templateId: 'd-1c5fd28d3762405886b06a59b319f904',
-        firstName: foundUser.firstName,
-      });
-    }
+    await mailTransport().sendMail({
+      from: process.env.TEAM_EMAIL_ADDRESS,
+      to: foundUser.email,
+      subject: 'Password Reset Successfully',
+      html: passwordChangedTemplate(foundUser.firstName),
+    });
+    // if (process.env.NODE_ENV === 'dev') {
+    //   // By mailtrap for testing
+    //   mailTransport().sendMail({
+    //     from: process.env.TEAM_EMAIL_ADDRESS,
+    //     to: foundUser.email,
+    //     subject: 'Password Reset Successfully',
+    //     html: passwordChangedTemplate(foundUser.firstName),
+    //   });
+    // } else if (process.env.NODE_ENV === 'prod') {
+    //   // By SendGrid in production
+    //   await sendEmail({
+    //     to: foundUser.email,
+    //     subject: 'Password Reset Successfully',
+    //     templateId: 'd-1c5fd28d3762405886b06a59b319f904',
+    //     firstName: foundUser.firstName,
+    //   });
+    // }
     res.status(201).json({
       success: true,
       message:

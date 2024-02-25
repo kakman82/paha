@@ -31,14 +31,16 @@ const Graph = () => {
   const { data: expensesByYear, isSuccess: isYearlySuccess } =
     useGetExpensesByYearQuery(selectedYear);
 
-  let chartData;
-  let totalByCategories;
+  let chartData = 0;
+  let totalByCategories = 0;
 
   if (isYearlySuccess) {
-    chartData = getChartData(expensesByYear.expensesByGivenYear);
-    totalByCategories = getTotalByCategories(
-      expensesByYear.expensesByGivenYear
-    );
+    if (expensesByYear.expensesByGivenYear.length > 0) {
+      chartData = getChartData(expensesByYear.expensesByGivenYear);
+      totalByCategories = getTotalByCategories(
+        expensesByYear.expensesByGivenYear
+      );
+    }
   }
 
   return (
@@ -48,7 +50,7 @@ const Graph = () => {
           <Spinner size={'xl'} color='cyan.300' />
         </Stack>
       )}
-      {isSuccess && isYearlySuccess && (
+      {isSuccess && isYearlySuccess && data.allExpenses.length > 0 && (
         <>
           <Center h={'75px'} w={'100%'} justifyContent={'center'}>
             <Select
@@ -84,11 +86,15 @@ const Graph = () => {
                 color='teal'
                 fontWeight={'extrabold'}
               >
-                {niceNumber(chartData.data.total)}
+                {expensesByYear.expensesByGivenYear.length > 0
+                  ? niceNumber(chartData.data.total)
+                  : 0}
               </Text>
             </Heading>
           </Box>
-          <Labels labelData={totalByCategories} />
+          {expensesByYear.expensesByGivenYear.length > 0 && (
+            <Labels labelData={totalByCategories} />
+          )}
         </>
       )}
     </Box>
