@@ -30,7 +30,7 @@ app.use(
       'https://paha-five.vercel.app',
       'http://localhost:5173',
     ],
-    optionsSuccessStatus: 200,
+    optionsSuccessStatus: 204,
     exposedHeaders: ['set-cookie'],
   })
 );

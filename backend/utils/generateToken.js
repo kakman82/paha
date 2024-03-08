@@ -6,11 +6,8 @@ function generateToken(res, userId) {
   });
 
   res.cookie('access_token', token, {
-    // httpOnly: process.env.NODE_ENV === 'prod' ? true : false,
     httpOnly: true,
-    secure: false,
-    // secure: process.env.NODE_ENV === 'prod' ? true : false,
-    // Prevent CSRF attacks sameSite: 'strict' - but does not work on safari
+    secure: true,
     sameSite: 'none',
     maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
   });

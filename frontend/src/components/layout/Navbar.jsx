@@ -113,8 +113,12 @@ const Navbar = () => {
                 {userInfo.firstName}
               </MenuButton>
               <MenuList>
-                <MenuItem>
-                  <ReachLink to={'/user/profile'}>Profile</ReachLink>
+                <MenuItem
+                  as={'button'}
+                  fontWeight={'bold'}
+                  onClick={() => navigate('/user/profile')}
+                >
+                  Profile
                 </MenuItem>
 
                 <MenuDivider />

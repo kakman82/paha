@@ -37,8 +37,8 @@ const Expenses = () => {
     page,
     startDate: startDate === null ? '' : startDate,
     endDate: endDate === null ? '' : endDate,
-    // for mobile max 4 items, for the rest of screens is max 8
-    limit: window.innerWidth < 500 ? 4 : 8,
+    // for mobile max 4 items, for the rest of screens is max 6
+    limit: window.innerWidth < 500 ? 4 : 6,
   };
 
   const { data, isFetching, isSuccess } = useGetExpensesQuery(q, {
