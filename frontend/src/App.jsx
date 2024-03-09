@@ -30,7 +30,7 @@ function App() {
   const jwt_token = localStorage.getItem('access_token');
 
   let decoded_jwt;
-  if (jwt_token !== null) {
+  if (userInfo && jwt_token !== null) {
     decoded_jwt = jwtDecode(jwt_token);
     return decoded_jwt;
   }
