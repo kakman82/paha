@@ -27,12 +27,7 @@ export const verifyToken = async (req, res, next) => {
       );
       next();
     } catch (error) {
-      res.status(401).json({
-        alert: {
-          status: 'fail',
-          msg: 'Token is not valid. Please logout and sign-in again!',
-        },
-      });
+      next(createError(403, 'Token is not valid! Please log-in again...'));
     }
   }
 };
