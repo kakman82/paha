@@ -32,7 +32,6 @@ function App() {
   let decoded_jwt;
   if (jwt_token !== null) {
     decoded_jwt = jwtDecode(jwt_token);
-    console.log(decoded_jwt);
     return decoded_jwt;
   }
 
@@ -51,7 +50,7 @@ function App() {
       });
       navigate('/auth/login');
     }
-  }, []);
+  }, [jwt_token]);
 
   return (
     <>
