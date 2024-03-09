@@ -31,7 +31,7 @@ function App() {
 
   let decoded_jwt;
   if (userInfo && jwt_token !== null) {
-    decoded_jwt = jwtDecode(jwt_token);
+    decoded_jwt = jwtDecode(JSON.parse(jwt_token));
     return decoded_jwt;
   }
 
