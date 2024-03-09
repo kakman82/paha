@@ -35,22 +35,34 @@ function App() {
     return decoded_jwt;
   }
 
-  useEffect(() => {
-    if (jwt_token === null) {
-      navigate('/auth/login');
-    }
-    if (
-      jwt_token !== null &&
-      jwt_token.length > 0 &&
-      decoded_jwt?.exp < new Date().getTime / 1000
-    ) {
-      toast({
-        title: 'Your token is expired. Please login again!',
-        status: 'warning',
-      });
-      navigate('/auth/login');
-    }
-  }, [jwt_token]);
+  if (
+    jwt_token !== null &&
+    jwt_token.length > 0 &&
+    decoded_jwt?.exp < new Date().getTime / 1000
+  ) {
+    toast({
+      title: 'Your token is expired. Please login again!',
+      status: 'warning',
+    });
+    navigate('/auth/login');
+  }
+
+  // useEffect(() => {
+  //   if (jwt_token === null) {
+  //     navigate('/auth/login');
+  //   }
+  //   if (
+  //     jwt_token !== null &&
+  //     jwt_token.length > 0 &&
+  //     decoded_jwt?.exp < new Date().getTime / 1000
+  //   ) {
+  //     toast({
+  //       title: 'Your token is expired. Please login again!',
+  //       status: 'warning',
+  //     });
+  //     navigate('/auth/login');
+  //   }
+  // }, [jwt_token]);
 
   return (
     <>
