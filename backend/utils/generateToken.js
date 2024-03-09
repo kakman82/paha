@@ -5,12 +5,15 @@ function generateToken(res, userId) {
     expiresIn: '90d',
   });
 
-  res.cookie('access_token', token, {
-    httpOnly: true,
-    secure: true,
-    sameSite: 'none',
-    maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-  });
+  return token;
+
+  // For the cookie process;
+  // res.cookie('access_token', token, {
+  //   httpOnly: true,
+  //   secure: true,
+  //   sameSite: 'none',
+  //   maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+  // });
 }
 
 export default generateToken;

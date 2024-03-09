@@ -24,14 +24,15 @@ connectDB();
 // Middlewares;
 app.use(
   cors({
-    credentials: true,
+    //credentials: true,
     origin: [
       'https://paha-kakman82.vercel.app',
       'https://paha-five.vercel.app',
       'http://localhost:5173',
     ],
     optionsSuccessStatus: 204,
-    exposedHeaders: ['set-cookie'],
+    //exposedHeaders: ['set-cookie'],
+    //allowedHeaders: ['Access-Control-Allow-Credentials'],
   })
 );
 app.use(cookieParser());

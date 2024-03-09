@@ -26,12 +26,11 @@ export const updateProfile = async (req, res, next) => {
         { new: true }
       );
 
-      generateToken(res, updatedProfile._id);
-
       const { password, ...others } = updatedProfile._doc;
 
       res.status(201).json({
         updatedProfile: others,
+        token: generateToken(res, updatedProfile._id),
         message: 'User profile has been updated!',
       });
     } else {

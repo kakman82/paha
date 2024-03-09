@@ -27,19 +27,24 @@ function App() {
   const navigate = useNavigate();
   const toast = useToast();
 
-  const token = document.cookie;
+  const jwt_token = localStorage.getItem('access_token');
 
-  let cookieInfo;
-  if (token) {
-    cookieInfo = JSON.stringify(jwtDecode(token));
-    return cookieInfo;
+  let decoded_jwt;
+  if (jwt_token !== null) {
+    decoded_jwt = jwtDecode(jwt_token);
+    console.log(decoded_jwt);
+    return decoded_jwt;
   }
 
   useEffect(() => {
-    if (token.length === 0) {
+    if (jwt_token === null) {
       navigate('/auth/login');
     }
-    if ((token.length > 0) & (cookieInfo?.exp < new Date().getTime / 1000)) {
+    if (
+      jwt_token !== null &&
+      jwt_token.length > 0 &&
+      decoded_jwt?.exp < new Date().getTime / 1000
+    ) {
       toast({
         title: 'Your token is expired. Please login again!',
         status: 'warning',

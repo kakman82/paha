@@ -91,13 +91,11 @@ export const signup = async (req, res, next) => {
     //   });
     // }
 
-    // Create JWT token and Parse token as a cookie on the response;
-    generateToken(res, newUser._id);
-
     const { password, ...others } = newUser._doc;
 
     res.status(201).json({
       user: others,
+      token: generateToken(res, newUser._id),
       msg: `Hello ${newUser.firstName}, please verify your email! A verification code has been sent to your email...`,
     });
   } catch (error) {
@@ -127,13 +125,11 @@ export const signin = async (req, res, next) => {
       );
     }
 
-    // Create JWT token and arse token as a cookie on the response;
-    generateToken(res, foundUser._id);
-
     const user = await User.findById(foundUser?._id);
 
     res.status(200).json({
       user: user,
+      token: generateToken(res, foundUser._id),
       message: `Welcome ${foundUser.firstName}!`,
     });
   } catch (error) {

@@ -24,8 +24,8 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('test.user@test.com');
+  const [password, setPassword] = useState('123456');
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -53,7 +53,12 @@ export default function Login() {
     try {
       const res = await loginApiCall({ email, password }).unwrap();
 
-      dispatch(setCredentials(res.user));
+      const payload = {
+        user: res.user,
+        token: res.token,
+      };
+
+      dispatch(setCredentials(payload));
 
       if (res.user.isVerified) {
         navigate('/');
@@ -106,7 +111,6 @@ export default function Login() {
             <FormControl isRequired={true}>
               <FormLabel>Email address</FormLabel>
               <Input
-                placeholder='test.user@test.com'
                 borderColor='teal.400'
                 focusBorderColor='teal.400'
                 type='email'
@@ -118,7 +122,6 @@ export default function Login() {
               <FormLabel>Password</FormLabel>
               <InputGroup>
                 <Input
-                  placeholder='123456'
                   borderColor='teal.400'
                   focusBorderColor='teal.400'
                   type={showPassword ? 'text' : 'password'}
