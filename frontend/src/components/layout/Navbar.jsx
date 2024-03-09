@@ -41,7 +41,7 @@ const Navbar = () => {
       const res = await logoutApiCall().unwrap();
       dispatch(clearCredentials());
       toast({ title: res.message, status: 'success' });
-      navigate('/auth/login');
+      navigate('/');
     } catch (err) {
       toast({
         title: err?.data?.message,
