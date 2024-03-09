@@ -17,8 +17,6 @@ import Definitions from './pages/Definitions';
 import Expenses from './pages/Expenses';
 import EditTransaction from './pages/EditTransaction';
 import { useToast } from '@chakra-ui/react';
-import { useEffect } from 'react';
-import { jwtDecode } from 'jwt-decode';
 import 'core-js/stable/atob';
 
 function App() {
@@ -26,43 +24,6 @@ function App() {
 
   const navigate = useNavigate();
   const toast = useToast();
-
-  const jwt_token = localStorage.getItem('access_token');
-
-  let decoded_jwt;
-  if (userInfo && jwt_token !== null) {
-    decoded_jwt = jwtDecode(JSON.parse(jwt_token));
-    return decoded_jwt;
-  }
-
-  if (
-    jwt_token !== null &&
-    jwt_token.length > 0 &&
-    decoded_jwt?.exp < new Date().getTime / 1000
-  ) {
-    toast({
-      title: 'Your token is expired. Please login again!',
-      status: 'warning',
-    });
-    navigate('/auth/login');
-  }
-
-  // useEffect(() => {
-  //   if (jwt_token === null) {
-  //     navigate('/auth/login');
-  //   }
-  //   if (
-  //     jwt_token !== null &&
-  //     jwt_token.length > 0 &&
-  //     decoded_jwt?.exp < new Date().getTime / 1000
-  //   ) {
-  //     toast({
-  //       title: 'Your token is expired. Please login again!',
-  //       status: 'warning',
-  //     });
-  //     navigate('/auth/login');
-  //   }
-  // }, [jwt_token]);
 
   return (
     <>
