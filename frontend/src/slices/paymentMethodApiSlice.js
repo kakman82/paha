@@ -11,13 +11,12 @@ export const paymentMethodApiSlice = apiSlice
         query: () => ({
           url: '/payment-methods',
         }),
-        providesTags: ['PaymentMethods', 'Expenses'],
       }),
       getPaymentMethods: builder.query({
         query: (q) => ({
           url: `/payment-methods?page=${q.page}&limit=${q.limit}`,
         }),
-        invalidatesTags: ['PaymentMethods', 'Expenses'],
+        providesTags: ['PaymentMethods', 'Expenses'],
       }),
       addPaymentMethod: builder.mutation({
         query: (data) => ({

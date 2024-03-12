@@ -8,13 +8,12 @@ export const categoryApiSlice = apiSlice
         query: () => ({
           url: '/categories',
         }),
-        providesTags: ['Categories', 'Expenses'],
       }),
       getCategories: builder.query({
         query: (q) => ({
           url: `/categories?page=${q.page}&limit=${q.limit}`,
         }),
-        invalidatesTags: ['Categories', 'Expenses'],
+        providesTags: ['Categories', 'Expenses'],
       }),
       createCategory: builder.mutation({
         query: (data) => ({
