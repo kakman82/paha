@@ -103,8 +103,7 @@ const DeleteAlert = ({ isOpen, onClose, tabIndex, itemId }) => {
                 Are you sure you want to permanently remove this item?
               </AlertTitle>
               <AlertDescription maxWidth='sm'>
-                You will have to select or create a new {itemType} for your
-                expenses!
+                You cannot undo this action!
                 <br />
                 Or you can give a try to edit...
               </AlertDescription>

@@ -11,6 +11,7 @@ export const paymentMethodApiSlice = apiSlice
         query: () => ({
           url: '/payment-methods',
         }),
+        providesTags: ['PaymentMethods'],
       }),
       getPaymentMethods: builder.query({
         query: (q) => ({
@@ -21,7 +22,6 @@ export const paymentMethodApiSlice = apiSlice
       addPaymentMethod: builder.mutation({
         query: (data) => ({
           url: '/payment-methods',
-
           method: 'POST',
           body: data,
         }),
@@ -30,7 +30,6 @@ export const paymentMethodApiSlice = apiSlice
       updatePaymentMethod: builder.mutation({
         query: (paymentMethod) => ({
           url: `/payment-methods/${paymentMethod.id}`,
-
           method: 'PUT',
           body: paymentMethod,
         }),
@@ -39,7 +38,6 @@ export const paymentMethodApiSlice = apiSlice
       deletePaymentMethod: builder.mutation({
         query: (id) => ({
           url: `/payment-methods/${id}`,
-
           method: 'DELETE',
         }),
         invalidatesTags: ['PaymentMethods', 'Expenses'],

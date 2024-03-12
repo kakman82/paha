@@ -8,6 +8,7 @@ export const categoryApiSlice = apiSlice
         query: () => ({
           url: '/categories',
         }),
+        providesTags: ['Categories'],
       }),
       getCategories: builder.query({
         query: (q) => ({

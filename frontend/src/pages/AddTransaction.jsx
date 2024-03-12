@@ -7,7 +7,10 @@ import {
   Spinner,
 } from '@chakra-ui/react';
 
-import { useGetAllCategoriesQuery } from '../slices/categoryApiSlice';
+import {
+  useGetAllCategoriesQuery,
+  useGetCategoriesQuery,
+} from '../slices/categoryApiSlice';
 import { useGetAllPaymentMethodsQuery } from '../slices/paymentMethodApiSlice';
 import FormExpense from '../components/expense/FormExpense';
 
