@@ -70,7 +70,14 @@ const Graph = () => {
               ))}
             </Select>
           </Center>
-          <Doughnut data={chartData.data} options={chartData.options} />
+
+          {chartData?.data?.labels?.length > 0 ? (
+            <Doughnut data={chartData.data} options={chartData.options} />
+          ) : (
+            <Center mt={8}>
+              <Text color='gray.400'>No found graph data!</Text>
+            </Center>
+          )}
           <Box position={'relative'} textAlign={'center'}>
             <Heading
               position={'absolute'}

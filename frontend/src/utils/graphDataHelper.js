@@ -21,6 +21,20 @@ export const getTotalByCategories = (data) => {
 export const getChartData = (data) => {
   let chartData = getTotalByCategories(data);
 
+  if (!chartData || chartData.length === 0) {
+    return {
+      data: {
+        labels: [],
+        total: 0,
+        percentages: [],
+        datasets: [],
+      },
+      options: {
+        cutout: '90%',
+      },
+    };
+  }
+
   let config = {
     data: {
       labels: chartData.map((el) => el.catName),
