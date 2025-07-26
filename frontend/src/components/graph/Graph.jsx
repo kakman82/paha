@@ -34,13 +34,16 @@ const Graph = () => {
   let chartData = 0;
   let totalByCategories = 0;
 
-  if (isYearlySuccess) {
-    if (expensesByYear.expensesByGivenYear.length > 0) {
-      chartData = getChartData(expensesByYear.expensesByGivenYear);
-      totalByCategories = getTotalByCategories(
-        expensesByYear.expensesByGivenYear
-      );
-    }
+  if (
+    isYearlySuccess &&
+    expensesByYear &&
+    Array.isArray(expensesByYear.expensesByGivenYear) &&
+    expensesByYear.expensesByGivenYear.length > 0
+  ) {
+    chartData = getChartData(expensesByYear.expensesByGivenYear);
+    totalByCategories = getTotalByCategories(
+      expensesByYear.expensesByGivenYear
+    );
   }
 
   return (
