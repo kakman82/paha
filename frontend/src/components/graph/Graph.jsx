@@ -31,6 +31,12 @@ const Graph = () => {
   const { data: expensesByYear, isSuccess: isYearlySuccess } =
     useGetExpensesByYearQuery(selectedYear);
 
+  const hasExpenses =
+    isYearlySuccess &&
+    expensesByYear &&
+    Array.isArray(expensesByYear.expensesByGivenYear) &&
+    expensesByYear.expensesByGivenYear.length > 0;
+
   let chartData = {
     data: {
       labels: [],
@@ -85,7 +91,7 @@ const Graph = () => {
             </Select>
           </Center>
 
-          {chartData?.data?.labels?.length > 0 ? (
+          {hasExpenses ? (
             <Doughnut data={chartData.data} options={chartData.options} />
           ) : (
             <Center mt={8}>
@@ -107,15 +113,11 @@ const Graph = () => {
                 color='teal'
                 fontWeight={'extrabold'}
               >
-                {expensesByYear.expensesByGivenYear.length > 0
-                  ? niceNumber(chartData.data.total)
-                  : 0}
+                {hasExpenses ? niceNumber(chartData.data.total) : 0}
               </Text>
             </Heading>
           </Box>
-          {expensesByYear.expensesByGivenYear.length > 0 && (
-            <Labels labelData={totalByCategories} />
-          )}
+          {hasExpenses && <Labels labelData={totalByCategories} />}
         </>
       )}
     </Box>
