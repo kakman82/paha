@@ -31,8 +31,19 @@ const Graph = () => {
   const { data: expensesByYear, isSuccess: isYearlySuccess } =
     useGetExpensesByYearQuery(selectedYear);
 
-  let chartData = 0;
-  let totalByCategories = 0;
+  let chartData = {
+    data: {
+      labels: [],
+      total: 0,
+      percentages: [],
+      datasets: [],
+    },
+    options: {
+      cutout: '90%',
+    },
+  };
+
+  let totalByCategories = [];
 
   if (
     isYearlySuccess &&
