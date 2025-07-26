@@ -63,7 +63,7 @@ const Graph = () => {
               value={selectedYear}
               onChange={(e) => setSelectedYear(e.target.value)}
             >
-              {data.years.map((el, i) => (
+              {data?.years?.map((el, i) => (
                 <option key={i} value={el}>
                   {el}
                 </option>
